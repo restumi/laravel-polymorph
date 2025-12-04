@@ -6,7 +6,7 @@
 <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Tambah Video Baru</h2>
 
-    <form action="{{ route('videos.store') }}" method="POST">
+    <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-4">
@@ -22,16 +22,20 @@
         </div>
 
         <div class="mb-6">
-            <label for="url_video" class="block text-gray-700 font-medium mb-2">URL Video</label>
+            <label for="url_video" class="block text-gray-700 font-medium mb-2">Upload Video</label>
             <input
-                type="url"
+                type="file"
                 id="url_video"
                 name="url_video"
-                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="https://www.youtube.com/watch?v=..."
+                accept="video/*"
+                class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded file:border-0
+                    file:bg-indigo-600 file:text-white
+                    hover:file:bg-indigo-700"
                 required
             >
-            <p class="text-sm text-gray-500 mt-1">Masukkan URL lengkap (misal: dari YouTube, Vimeo, dll)</p>
+            <p class="text-sm text-gray-500 mt-1">Format: MP4, MOV, AVI (max 50MB)</p>
         </div>
 
         <div class="flex gap-3">

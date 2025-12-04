@@ -17,7 +17,16 @@
     @foreach($videos as $video)
         <div class="bg-white rounded-lg shadow p-5 mb-5">
             <h3 class="text-xl font-bold text-gray-800">{{ $video->title }}</h3>
-            <p class="text-gray-600 mt-1">URL: <a href="{{ $video->url_video }}" target="_blank" class="text-indigo-600">{{ $video->url_video }}</a></p>
+            <div class="mt-3">
+                <video
+                    src="{{ asset('storage/' . $video->url_video) }}"
+                    controls
+                    class="w-full rounded"
+                    style="max-height: 300px;"
+                >
+                    Browsermu tidak mendukung video tag.
+                </video>
+            </div>
 
             <!-- Form Komentar -->
             <form action="{{ route('videos.comments.store', $video) }}" method="POST" class="mt-4">

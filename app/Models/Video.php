@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    protected $fillable = ['title', 'url'];
+    protected $fillable = ['title', 'url_video'];
 
     public function comments()
     {
