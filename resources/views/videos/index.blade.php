@@ -54,18 +54,23 @@
                 @endforeach
             </div>
 
-            <!-- Tombol Hapus -->
-            <form action="{{ route('videos.destroy', $video) }}" method="POST" class="inline-block mt-3">
-                @csrf
-                @method('DELETE')
-                <button
-                    type="submit"
-                    class="text-red-600 hover:text-red-800 text-sm"
-                    onclick="return confirm('Yakin hapus video ini?')"
-                >
-                    Hapus Video
-                </button>
-            </form>
+            <div class="flex gap-3 mt-4">
+                <a href="{{ route('videos.edit', $video) }}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                    Edit
+                </a>
+
+                <form action="{{ route('videos.destroy', $video) }}" method="POST" class="inline-block">
+                    @csrf
+                    @method('DELETE')
+                    <button
+                        type="submit"
+                        class="text-red-600 hover:text-red-800 text-sm font-medium"
+                        onclick="return confirm('Yakin hapus video ini? File akan dihapus permanen!')"
+                    >
+                        Hapus
+                    </button>
+                </form>
+            </div>
         </div>
     @endforeach
 @endif

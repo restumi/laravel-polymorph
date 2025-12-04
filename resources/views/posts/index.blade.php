@@ -76,6 +76,18 @@
                 @endforeach
             </div>
 
+                <button
+                    type="button"
+                    class="text-indigo-600 hover:text-indigo-800 text-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editPostModal"
+                    data-id="{{ $post->id }}"
+                    data-title="{{ $post->title }}"
+                    data-content="{{ $post->content }}"
+                >
+                    Edit
+                </button>
+
             <!-- Hapus -->
             <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline-block mt-3">
                 @csrf
@@ -88,7 +100,59 @@
                     Hapus Blog
                 </button>
             </form>
+
         </div>
     @endforeach
 @endif
+
+<!-- Modal Edit Post -->
+<div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPostModalLabel">Edit Blog</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="editPostForm" method="POST">
+        @csrf
+        @method('PATCH')
+        <div class="modal-body">
+          <input type="hidden" id="edit_post_id" name="id">
+          <div class="mb-3">
+            <label class="form-label">Judul</label>
+            <input type="text" name="title" id="edit_title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Konten</label>
+            <textarea name="content" id="edit_content" class="form-control" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+document.querySelectorAll('[data-bs-target="#editPostModal"]').forEach(button => {
+    button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        const title = this.getAttribute('data-title');
+        const content = this.getAttribute('data-content');
+
+        document.getElementById('edit_post_id').value = id;
+        document.getElementById('edit_title').value = title;
+        document.getElementById('edit_content').value = content;
+
+        // Set action form dinamis
+        const form = document.getElementById('editPostForm');
+        form.action = `/posts/${id}`;
+    });
+});
+</script>
+@endpush

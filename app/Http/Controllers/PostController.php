@@ -31,6 +31,18 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Blog success uploaded!');
     }
 
+    public function update(Request $request, Post $post)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string'
+        ]);
+
+        $post->update($request->only('title', 'content'));
+
+        return redirect()->route('posts.index')->with('success', 'Blog updated!');
+    }
+
     /**
      * Display the specified resource.
      */
@@ -44,6 +56,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->comments()->delete();
         $post->delete();
         return redirect()->back()->with('success', 'Blog deleted');
     }

@@ -36,6 +36,10 @@
                 required
             >
             <p class="text-sm text-gray-500 mt-1">Format: MP4, MOV, AVI (max 50MB)</p>
+
+            @error('url_video')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex gap-3">

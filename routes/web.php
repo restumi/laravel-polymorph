@@ -13,11 +13,14 @@ Route::get('/', function () {
 // ========== POSTS / BLOG ==========
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 // ========== VIDEO ==========
-Route::resource('videos', VideoController::class);
+Route::resource('videos', VideoController::class)->except(['show']);
 
 // ========== COMMENT ==========
-Route::post('/comment/{post}/post', [CommentController::class, 'storePostComment'])->name('posts.comments.store');
-Route::post('comment/{video}/video', [CommentController::class, 'storeVideosComment'])->name('videos.comments.store');
+Route::post('/posts/{post}/comments', [CommentController::class, 'storePostComment'])->name('posts.comments.store');
+Route::post('/videos/{video}/comments', [CommentController::class, 'storeVideosComment'])->name('videos.comments.store');
+Route::delete('/p', [CommentController::class, 'deleteAll']);
+Route::get('/token', [CommentController::class, 'token']);
